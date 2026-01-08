@@ -87,11 +87,11 @@ export const Footer = () => {
             <h4 className="text-lg font-bold mb-6 text-primary">Quick Links</h4>
             <ul className="space-y-3">
               {[
-                { label: 'Menu', to: '/#menu' },
+                { label: 'Menu', to: '/menu' },
                 { label: 'My Orders', to: '/orders' },
                 { label: 'About Us', to: '/' },
                 { label: 'FAQs', to: '/' },
-                { label: 'Contact', to: '/' }
+                { label: 'Contact', to: '/contact' }
               ].map((link, index) => (
                 <li key={index}>
                   <Link
@@ -210,13 +210,13 @@ export const Footer = () => {
 
           <div className="flex items-center gap-6">
             <Link
-              to="/"
+              to="/privacy-policy"
               className="text-sm text-secondary-foreground/60 hover:text-primary transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              to="/"
+              to="/terms-of-service"
               className="text-sm text-secondary-foreground/60 hover:text-primary transition-colors"
             >
               Terms of Service
