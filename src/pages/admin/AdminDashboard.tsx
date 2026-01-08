@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { ShoppingCart, Clock, CheckCircle, DollarSign, TrendingUp } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { ShoppingCart, Clock, CheckCircle, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface Order {
   total: number;
@@ -23,6 +24,23 @@ const AdminDashboard = () => {
   const todayRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
 
   const formatPrice = (price: number) => `TZS ${price.toLocaleString()}`;
+
+  // Generate last 7 days chart data
+  const chartData = useMemo(() => {
+    const days = [];
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toDateString();
+      const dayOrders = orders.filter(o => new Date(o.createdAt).toDateString() === dateStr);
+      days.push({
+        day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        orders: dayOrders.length,
+        revenue: dayOrders.reduce((sum, o) => sum + o.total, 0),
+      });
+    }
+    return days;
+  }, [orders]);
 
   const stats = [
     {
@@ -72,6 +90,46 @@ const AdminDashboard = () => {
           </Card>
         ))}
       </div>
+
+      {/* Orders Chart */}
+      <Card className="p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <BarChart3 className="h-5 w-5 text-primary" />
+          <h2 className="font-bold text-lg">Orders (Last 7 Days)</h2>
+        </div>
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData}>
+              <XAxis 
+                dataKey="day" 
+                axisLine={false} 
+                tickLine={false}
+                tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
+              />
+              <YAxis 
+                axisLine={false} 
+                tickLine={false}
+                tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
+                allowDecimals={false}
+              />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '8px',
+                }}
+                labelStyle={{ fontWeight: 'bold' }}
+              />
+              <Bar 
+                dataKey="orders" 
+                fill="hsl(var(--primary))" 
+                radius={[4, 4, 0, 0]}
+                name="Orders"
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </Card>
 
       {/* Recent Orders */}
       <Card className="p-6">
