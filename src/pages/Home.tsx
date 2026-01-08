@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/public/Header';
 import { HeroCarousel } from '@/components/public/HeroCarousel';
-import { TrustBadges } from '@/components/public/TrustBadges';
 import { MenuSection } from '@/components/public/MenuSection';
 import { HowItWorks } from '@/components/public/HowItWorks';
 import { LiveStats } from '@/components/public/LiveStats';
@@ -28,7 +27,6 @@ const Home = () => {
     >
       <Header onCartClick={() => setCartOpen(true)} />
       <HeroCarousel onOrderClick={scrollToMenu} />
-      <TrustBadges />
       <LiveStats />
       <MenuSection />
       <HowItWorks />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ShoppingCart, Menu, Search, MapPin, X, TrendingUp } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { ShoppingCart, Menu, Search, MapPin, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/contexts/CartContext';
@@ -17,10 +17,6 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
-
-  const headerHeight = useTransform(scrollY, [0, 100], [80, 64]);
-  const promoBannerOpacity = useTransform(scrollY, [0, 50], [1, 0]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,28 +28,6 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
 
   return (
     <header className="sticky top-0 z-50">
-      {/* Promo Banner */}
-      <motion.div
-        style={{ opacity: promoBannerOpacity }}
-        className="bg-gradient-to-r from-primary via-orange-600 to-primary text-white py-2 text-center text-sm font-semibold overflow-hidden relative"
-      >
-        <motion.div
-          animate={{
-            x: ['100%', '-100%']
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear'
-          }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        />
-        <div className="container mx-auto px-4 flex items-center justify-center gap-2 relative z-10">
-          <TrendingUp className="w-4 h-4" />
-          <span>🎉 Free Delivery on Orders Over 20,000 TZS | Use Code: FREESHIP</span>
-        </div>
-      </motion.div>
-
       {/* Main Header */}
       <motion.div
         className={`bg-card/95 backdrop-blur-xl border-b border-border transition-all duration-300 ${
@@ -99,7 +73,7 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
               </div>
               <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground">
                 <MapPin className="w-4 h-4" />
-                <span className="text-sm">Dar es Salaam</span>
+                <span className="text-sm">Arusha</span>
               </Button>
             </div>
 
