@@ -1,5 +1,6 @@
 import { Plus, Minus, Heart, Star, Flame } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
@@ -12,19 +13,25 @@ interface MenuCardProps {
 }
 
 export const MenuCard = ({ item, index = 0 }: MenuCardProps) => {
+  const navigate = useNavigate();
   const { items, addItem, updateQuantity } = useCart();
   const cartItem = items.find(i => i.id === item.id);
   const quantity = cartItem?.quantity || 0;
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const handleAdd = () => {
+  const handleAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
     addItem({
       id: item.id,
       name: item.name,
       price: item.price,
       image: item.image,
     });
+  };
+
+  const handleCardClick = () => {
+    navigate(`/menu/${item.id}`);
   };
 
   const formatPrice = (price: number) => {
@@ -41,7 +48,8 @@ export const MenuCard = ({ item, index = 0 }: MenuCardProps) => {
         whileHover="hover"
         initial="rest"
         animate="rest"
-        className="group"
+        className="group cursor-pointer"
+        onClick={handleCardClick}
       >
         <Card className="overflow-hidden bg-card border-0 shadow-lg hover:shadow-2xl transition-all duration-500 relative">
           {/* Gradient border effect on hover */}
@@ -127,7 +135,10 @@ export const MenuCard = ({ item, index = 0 }: MenuCardProps) => {
               className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => setIsFavorite(!isFavorite)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsFavorite(!isFavorite);
+              }}
             >
               <Heart
                 className={`w-5 h-5 transition-all ${
@@ -197,7 +208,10 @@ export const MenuCard = ({ item, index = 0 }: MenuCardProps) => {
                       size="icon"
                       variant="outline"
                       className="h-9 w-9 rounded-lg bg-white hover:bg-gray-50 border-2 border-primary/20"
-                      onClick={() => updateQuantity(item.id, quantity - 1)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        updateQuantity(item.id, quantity - 1);
+                      }}
                     >
                       <Minus className="h-4 w-4 text-primary" />
                     </Button>
@@ -215,7 +229,10 @@ export const MenuCard = ({ item, index = 0 }: MenuCardProps) => {
                     <Button
                       size="icon"
                       className="h-9 w-9 rounded-lg bg-gradient-to-r from-primary to-orange-600 hover:from-primary/90 hover:to-orange-700 shadow-md"
-                      onClick={() => updateQuantity(item.id, quantity + 1)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        updateQuantity(item.id, quantity + 1);
+                      }}
                     >
                       <Plus className="h-4 w-4" />
                     </Button>
