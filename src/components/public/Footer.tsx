@@ -91,8 +91,7 @@ export const Footer = () => {
                 { label: 'My Orders', to: '/orders' },
                 { label: 'About Us', to: '/' },
                 { label: 'FAQs', to: '/' },
-                { label: 'Contact', to: '/' },
-                { label: 'Admin Dashboard', to: '/admin' }
+                { label: 'Contact', to: '/' }
               ].map((link, index) => (
                 <li key={index}>
                   <Link
@@ -122,9 +121,9 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <span className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  123 Biryani Street, Kariakoo
+                  Kaloleni Area
                   <br />
-                  Dar es Salaam, Tanzania
+                  Arusha, Tanzania
                 </span>
               </li>
               <li className="flex items-center gap-3">
