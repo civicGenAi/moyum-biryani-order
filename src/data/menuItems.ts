@@ -112,26 +112,6 @@ export const menuItems: MenuItem[] = [
     category: 'Customized',
     isAvailable: true,
   },
-
-  // Drinks
-  {
-    id: '11',
-    name: 'Soft Drink',
-    description: 'Coca-Cola, Fanta, or Sprite (500ml)',
-    price: 1500,
-    image: birianiPoster,
-    category: 'Drinks',
-    isAvailable: true,
-  },
-  {
-    id: '12',
-    name: 'Fresh Juice',
-    description: 'Mango, Orange, or Mixed fruit juice',
-    price: 3000,
-    image: birianiPoster,
-    category: 'Drinks',
-    isAvailable: true,
-  },
 ];
 
-export const categories = ['All', 'Individual', 'Friends', 'Family', 'Events', 'Customized', 'Drinks'];
+export const categories = ['All', 'Individual', 'Friends', 'Family', 'Events', 'Customized'];
