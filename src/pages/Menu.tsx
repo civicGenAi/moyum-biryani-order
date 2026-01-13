@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/public/Header';
 import { MenuCard } from '@/components/public/MenuCard';
@@ -8,15 +8,32 @@ import { CartSheet } from '@/components/public/CartSheet';
 import { menuItems, categories } from '@/data/menuItems';
 import { Button } from '@/components/ui/button';
 import { Filter } from 'lucide-react';
+import { useBranch } from '@/contexts/BranchContext';
 
 const Menu = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { selectedBranch } = useBranch();
+
+  // Filter items based on branch and category
+  const branchFilteredItems = useMemo(() => {
+    return menuItems.filter(item => {
+      if (!item.isAvailable) return false;
+      if (!selectedBranch) return true;
+      return selectedBranch.categories.includes(item.productType);
+    });
+  }, [selectedBranch]);
+
+  // Get available categories based on branch
+  const availableCategories = useMemo(() => {
+    const cats = new Set(branchFilteredItems.map(item => item.category));
+    return ['All', ...Array.from(cats)];
+  }, [branchFilteredItems]);
 
   const filteredItems = activeCategory === 'All'
-    ? menuItems.filter(item => item.isAvailable)
-    : menuItems.filter(item => item.category === activeCategory && item.isAvailable);
+    ? branchFilteredItems
+    : branchFilteredItems.filter(item => item.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
@@ -32,7 +49,7 @@ const Menu = () => {
             Full Menu
           </h1>
           <p className="text-muted-foreground text-lg font-body">
-            Explore our complete selection of authentic biryani dishes
+            {selectedBranch ? `Available at ${selectedBranch.name}` : 'Explore our complete selection'}
           </p>
         </motion.div>
 
@@ -55,7 +72,7 @@ const Menu = () => {
               </button>
             </div>
             <div className="space-y-2">
-              {categories.map((category) => (
+              {availableCategories.map((category) => (
                 <Button
                   key={category}
                   variant={activeCategory === category ? 'default' : 'ghost'}

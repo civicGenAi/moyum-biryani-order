@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { ShoppingCart, Menu, Search, MapPin, X } from 'lucide-react';
+import { ShoppingCart, Menu, Search, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/contexts/CartContext';
+import { BranchSelector } from './BranchSelector';
 import logo from '@/assets/logo.jpeg';
 import { Link } from 'react-router-dom';
 
@@ -71,10 +72,7 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground">
-                <MapPin className="w-4 h-4" />
-                <span className="text-sm">Arusha</span>
-              </Button>
+              <BranchSelector />
             </div>
 
             {/* Actions */}
