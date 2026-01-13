@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, MapPin, Phone, User, CreditCard, Truck, Store, Sparkles } from 'lucide-react';
@@ -8,24 +8,14 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
+import { useBranch } from '@/contexts/BranchContext';
 import { CheckoutProgress } from '@/components/public/CheckoutProgress';
 import { toast } from 'sonner';
-
-// Sample location suggestions for Arusha
-const locationSuggestions = [
-  'Kaloleni Area, Arusha',
-  'Njiro, Arusha',
-  'Kijenge, Arusha',
-  'Sokoni, Arusha',
-  'Themi, Arusha',
-  'Sekei, Arusha',
-  'Lemara, Arusha',
-  'Unga Limited, Arusha',
-];
 
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, total, clearCart } = useCart();
+  const { selectedBranch } = useBranch();
   const [deliveryMethod, setDeliveryMethod] = useState('delivery');
   const [paymentMethod, setPaymentMethod] = useState('momo');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -38,14 +28,29 @@ const Checkout = () => {
 
   const formatPrice = (price: number) => `TZS ${price.toLocaleString()}`;
 
+  // Generate location suggestions based on selected branch city
+  const locationSuggestions = useMemo(() => {
+    const city = selectedBranch?.city || 'Dar es Salaam';
+    return [
+      `Central Area, ${city}`,
+      `Upanga, ${city}`,
+      `Kariakoo, ${city}`,
+      `Kinondoni, ${city}`,
+      `Mikocheni, ${city}`,
+      `Masaki, ${city}`,
+      `Oysterbay, ${city}`,
+      `Mbezi Beach, ${city}`,
+    ];
+  }, [selectedBranch]);
+
   // Auto-populate location for pickup
   useEffect(() => {
     if (deliveryMethod === 'pickup') {
-      setFormData(prev => ({ ...prev, location: 'Arusha, Njiro, Tanesco' }));
+      setFormData(prev => ({ ...prev, location: selectedBranch?.address || 'Our Store Location' }));
     } else {
       setFormData(prev => ({ ...prev, location: '' }));
     }
-  }, [deliveryMethod]);
+  }, [deliveryMethod, selectedBranch]);
 
   // Filter location suggestions as user types
   const handleLocationChange = (value: string) => {

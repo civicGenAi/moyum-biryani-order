@@ -9,9 +9,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { useBranch } from '@/contexts/BranchContext';
 
 const Contact = () => {
   const [cartOpen, setCartOpen] = useState(false);
+  const { selectedBranch } = useBranch();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,7 +33,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Location',
-      details: 'Kaloleni Area, Arusha, Tanzania',
+      details: selectedBranch?.address || 'Dar es Salaam, Tanzania',
       color: 'from-orange-500 to-red-500',
       bgColor: 'bg-gradient-to-br from-orange-50 to-red-50',
       iconColor: 'text-orange-600',
@@ -40,7 +42,7 @@ const Contact = () => {
     {
       icon: Phone,
       title: 'Phone',
-      details: '+255 123 456 789',
+      details: selectedBranch?.phone || '+255 123 456 789',
       color: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-gradient-to-br from-blue-50 to-cyan-50',
       iconColor: 'text-blue-600',
@@ -58,7 +60,7 @@ const Contact = () => {
     {
       icon: Clock,
       title: 'Hours',
-      details: 'Mon-Sun: 10:00 AM - 10:00 PM',
+      details: `${selectedBranch?.openingTime || '10:00'} - ${selectedBranch?.closingTime || '22:00'}`,
       color: 'from-purple-500 to-pink-500',
       bgColor: 'bg-gradient-to-br from-purple-50 to-pink-50',
       iconColor: 'text-purple-600',
@@ -211,8 +213,7 @@ const Contact = () => {
                 <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
                 <h3 className="text-2xl font-bold mb-2 font-heading">Visit Us</h3>
                 <p className="text-muted-foreground font-body">
-                  Kaloleni Area, Arusha<br />
-                  Tanzania
+                  {selectedBranch?.address || 'Dar es Salaam, Tanzania'}
                 </p>
               </div>
             </div>
