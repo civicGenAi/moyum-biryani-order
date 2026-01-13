@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, ClipboardList, Percent, Settings, Home } from 'lucide-react';
+import { LayoutDashboard, Package, ClipboardList, Percent, Settings, Home, Store } from 'lucide-react';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import {
   Sidebar,
@@ -19,6 +19,7 @@ const menuItems = [
   { title: 'Products', url: '/admin/products', icon: Package },
   { title: 'Orders', url: '/admin/orders', icon: ClipboardList },
   { title: 'Discounts', url: '/admin/discounts', icon: Percent },
+  { title: 'Branches', url: '/admin/branches', icon: Store },
   { title: 'Settings', url: '/admin/settings', icon: Settings },
 ];
 

@@ -7,12 +7,13 @@ export interface MenuItem {
   price: number;
   image: string;
   category: string;
+  productType: 'biryani' | 'cakes'; // What type of product
   isAvailable: boolean;
   isSpecial?: boolean;
 }
 
 export const menuItems: MenuItem[] = [
-  // Individual Servings
+  // Individual Biryani Servings
   {
     id: '1',
     name: 'Classic Chicken Biryani',
@@ -20,6 +21,7 @@ export const menuItems: MenuItem[] = [
     price: 8000,
     image: birianiPoster,
     category: 'Individual',
+    productType: 'biryani',
     isAvailable: true,
     isSpecial: true,
   },
@@ -30,6 +32,7 @@ export const menuItems: MenuItem[] = [
     price: 12000,
     image: birianiPoster,
     category: 'Individual',
+    productType: 'biryani',
     isAvailable: true,
   },
   {
@@ -39,6 +42,7 @@ export const menuItems: MenuItem[] = [
     price: 15000,
     image: birianiPoster,
     category: 'Individual',
+    productType: 'biryani',
     isAvailable: true,
   },
 
@@ -50,6 +54,7 @@ export const menuItems: MenuItem[] = [
     price: 25000,
     image: birianiPoster,
     category: 'Friends',
+    productType: 'biryani',
     isAvailable: true,
   },
 
@@ -61,6 +66,7 @@ export const menuItems: MenuItem[] = [
     price: 45000,
     image: birianiPoster,
     category: 'Family',
+    productType: 'biryani',
     isAvailable: true,
   },
   {
@@ -70,6 +76,7 @@ export const menuItems: MenuItem[] = [
     price: 65000,
     image: birianiPoster,
     category: 'Family',
+    productType: 'biryani',
     isAvailable: true,
   },
 
@@ -81,6 +88,7 @@ export const menuItems: MenuItem[] = [
     price: 120000,
     image: birianiPoster,
     category: 'Events',
+    productType: 'biryani',
     isAvailable: true,
   },
   {
@@ -90,6 +98,7 @@ export const menuItems: MenuItem[] = [
     price: 220000,
     image: birianiPoster,
     category: 'Events',
+    productType: 'biryani',
     isAvailable: true,
   },
 
@@ -101,6 +110,7 @@ export const menuItems: MenuItem[] = [
     price: 10000,
     image: birianiPoster,
     category: 'Customized',
+    productType: 'biryani',
     isAvailable: true,
   },
   {
@@ -110,8 +120,52 @@ export const menuItems: MenuItem[] = [
     price: 0, // Price on request
     image: birianiPoster,
     category: 'Customized',
+    productType: 'biryani',
+    isAvailable: true,
+  },
+
+  // Cakes (Only available in Dar es Salaam)
+  {
+    id: '11',
+    name: 'Chocolate Layer Cake',
+    description: 'Rich chocolate layers with creamy ganache frosting',
+    price: 35000,
+    image: birianiPoster, // Will need cake image
+    category: 'Cakes',
+    productType: 'cakes',
+    isAvailable: true,
+    isSpecial: true,
+  },
+  {
+    id: '12',
+    name: 'Vanilla Birthday Cake',
+    description: 'Classic vanilla cake with buttercream, customizable decorations',
+    price: 30000,
+    image: birianiPoster,
+    category: 'Cakes',
+    productType: 'cakes',
+    isAvailable: true,
+  },
+  {
+    id: '13',
+    name: 'Red Velvet Cake',
+    description: 'Velvety soft cake with cream cheese frosting',
+    price: 40000,
+    image: birianiPoster,
+    category: 'Cakes',
+    productType: 'cakes',
+    isAvailable: true,
+  },
+  {
+    id: '14',
+    name: 'Custom Wedding Cake',
+    description: 'Multi-tier cake designed for your special day',
+    price: 150000,
+    image: birianiPoster,
+    category: 'Cakes',
+    productType: 'cakes',
     isAvailable: true,
   },
 ];
 
-export const categories = ['All', 'Individual', 'Friends', 'Family', 'Events', 'Customized'];
+export const categories = ['All', 'Individual', 'Friends', 'Family', 'Events', 'Customized', 'Cakes'];

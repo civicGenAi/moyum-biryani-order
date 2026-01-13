@@ -1,60 +1,67 @@
 // Animation Variants for Framer Motion
 // Reusable animation configurations for consistent motion design
 
-export const fadeIn = {
+import type { Variants, Transition } from 'framer-motion';
+
+type EasingFunction = [number, number, number, number];
+
+const easeOut: EasingFunction = [0.0, 0.0, 0.2, 1];
+const easeInOut: EasingFunction = [0.4, 0.0, 0.2, 1];
+
+export const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.6, ease: easeOut }
   }
 };
 
-export const fadeInUp = {
+export const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.6, ease: easeOut }
   }
 };
 
-export const fadeInDown = {
+export const fadeInDown: Variants = {
   hidden: { opacity: 0, y: -40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.6, ease: easeOut }
   }
 };
 
-export const fadeInLeft = {
+export const fadeInLeft: Variants = {
   hidden: { opacity: 0, x: -60 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.7, ease: "easeOut" }
+    transition: { duration: 0.7, ease: easeOut }
   }
 };
 
-export const fadeInRight = {
+export const fadeInRight: Variants = {
   hidden: { opacity: 0, x: 60 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.7, ease: "easeOut" }
+    transition: { duration: 0.7, ease: easeOut }
   }
 };
 
-export const scaleIn = {
+export const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { duration: 0.5, ease: easeOut }
   }
 };
 
-export const staggerContainer = {
+export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -65,30 +72,30 @@ export const staggerContainer = {
   }
 };
 
-export const staggerItem = {
+export const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { duration: 0.5, ease: easeOut }
   }
 };
 
 // Hover animations
-export const hoverLift = {
+export const hoverLift: Variants = {
   rest: { y: 0, scale: 1 },
   hover: {
     y: -8,
     scale: 1.02,
-    transition: { duration: 0.3, ease: "easeInOut" }
+    transition: { duration: 0.3, ease: easeInOut }
   }
 };
 
-export const hoverScale = {
+export const hoverScale: Variants = {
   rest: { scale: 1 },
   hover: {
     scale: 1.05,
-    transition: { duration: 0.3, ease: "easeInOut" }
+    transition: { duration: 0.3, ease: easeInOut }
   }
 };
 
@@ -98,7 +105,7 @@ export const pulse = {
   transition: {
     duration: 2,
     repeat: Infinity,
-    ease: "easeInOut"
+    ease: easeInOut
   }
 };
 
@@ -108,24 +115,24 @@ export const rotate = {
   transition: {
     duration: 20,
     repeat: Infinity,
-    ease: "linear"
+    ease: "linear" as const
   }
 };
 
 // Slide animations
-export const slideInLeft = {
+export const slideInLeft: Variants = {
   hidden: { x: "-100%" },
   visible: {
     x: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { duration: 0.5, ease: easeOut }
   }
 };
 
-export const slideInRight = {
+export const slideInRight: Variants = {
   hidden: { x: "100%" },
   visible: {
     x: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { duration: 0.5, ease: easeOut }
   }
 };
 
@@ -134,16 +141,16 @@ export const pageTransition = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.4, ease: "easeInOut" }
+  transition: { duration: 0.4, ease: easeInOut } as Transition
 };
 
 // Number counter animation (for stats)
-export const counterAnimation = {
+export const counterAnimation: Variants = {
   hidden: { opacity: 0, scale: 0.5 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.8, ease: "easeOut" }
+    transition: { duration: 0.8, ease: easeOut }
   }
 };
 
@@ -153,7 +160,7 @@ export const floating = {
   transition: {
     duration: 3,
     repeat: Infinity,
-    ease: "easeInOut"
+    ease: easeInOut
   }
 };
 
@@ -163,6 +170,6 @@ export const shimmer = {
   transition: {
     duration: 1.5,
     repeat: Infinity,
-    ease: "linear"
+    ease: "linear" as const
   }
 };

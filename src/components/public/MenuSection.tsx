@@ -5,15 +5,24 @@ import { MenuCard } from './MenuCard';
 import { menuItems } from '@/data/menuItems';
 import { Button } from '@/components/ui/button';
 import { Utensils, ArrowRight } from 'lucide-react';
+import { useBranch } from '@/contexts/BranchContext';
 
 export const MenuSection = () => {
   const navigate = useNavigate();
+  const { selectedBranch } = useBranch();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
   });
 
-  const displayItems = menuItems.filter(item => item.isAvailable).slice(0, 3);
+  // Filter items based on selected branch's categories
+  const filteredItems = menuItems.filter(item => {
+    if (!item.isAvailable) return false;
+    if (!selectedBranch) return true;
+    return selectedBranch.categories.includes(item.productType);
+  });
+
+  const displayItems = filteredItems.slice(0, 3);
 
   return (
     <section id="menu" className="py-16 px-4 bg-gradient-to-b from-background via-muted/10 to-background relative overflow-hidden">

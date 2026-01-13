@@ -36,12 +36,13 @@ const AdminProducts = () => {
     const description = formData.get('description') as string;
     const price = parseInt(formData.get('price') as string);
     const category = formData.get('category') as string;
+    const productType = formData.get('productType') as 'biryani' | 'cakes';
 
     if (editingProduct) {
       setProducts(prev =>
         prev.map(p =>
           p.id === editingProduct.id
-            ? { ...p, name, description, price, category }
+            ? { ...p, name, description, price, category, productType }
             : p
         )
       );
@@ -53,6 +54,7 @@ const AdminProducts = () => {
         description,
         price,
         category,
+        productType,
         image: initialItems[0].image,
         isAvailable: true,
       };
@@ -117,9 +119,22 @@ const AdminProducts = () => {
                   id="category"
                   name="category"
                   defaultValue={editingProduct?.category}
-                  placeholder="e.g. Biriani"
+                  placeholder="e.g. Individual, Family, Cakes"
                   required
                 />
+              </div>
+              <div>
+                <Label htmlFor="productType">Product Type</Label>
+                <select
+                  id="productType"
+                  name="productType"
+                  defaultValue={editingProduct?.productType || 'biryani'}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  required
+                >
+                  <option value="biryani">🍛 Biryani</option>
+                  <option value="cakes">🎂 Cakes</option>
+                </select>
               </div>
               <div className="flex justify-end gap-2">
                 <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
