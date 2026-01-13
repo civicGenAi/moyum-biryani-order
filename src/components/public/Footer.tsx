@@ -15,8 +15,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import logo from '@/assets/logo.jpeg';
+import { useBranch } from '@/contexts/BranchContext';
 
 export const Footer = () => {
+  const { selectedBranch, branches } = useBranch();
+  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -121,18 +124,16 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <span className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  Kaloleni Area
-                  <br />
-                  Arusha, Tanzania
+                  {selectedBranch?.address || 'Tanzania'}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
                 <a
-                  href="tel:+255123456789"
+                  href={`tel:${selectedBranch?.phone || '+255123456789'}`}
                   className="text-secondary-foreground/70 hover:text-primary transition-colors"
                 >
-                  +255 123 456 789
+                  {selectedBranch?.phone || '+255 123 456 789'}
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -148,7 +149,7 @@ export const Footer = () => {
                 <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <div className="text-secondary-foreground/70 text-sm">
                   <p className="font-semibold text-secondary-foreground mb-1">Opening Hours:</p>
-                  <p>Mon - Sun: 11:00 AM - 11:00 PM</p>
+                  <p>{selectedBranch?.openingTime || '10:00'} - {selectedBranch?.closingTime || '22:00'}</p>
                 </div>
               </li>
             </ul>

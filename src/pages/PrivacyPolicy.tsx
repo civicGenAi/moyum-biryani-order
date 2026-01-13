@@ -5,9 +5,11 @@ import { Footer } from '@/components/public/Footer';
 import { BottomNav } from '@/components/public/BottomNav';
 import { CartSheet } from '@/components/public/CartSheet';
 import { Shield, Lock, Eye, UserCheck, FileText } from 'lucide-react';
+import { useBranch } from '@/contexts/BranchContext';
 
 const PrivacyPolicy = () => {
   const [cartOpen, setCartOpen] = useState(false);
+  const { selectedBranch } = useBranch();
 
   const sections = [
     {
@@ -184,8 +186,8 @@ const PrivacyPolicy = () => {
             </p>
             <div className="space-y-2 font-body">
               <p className="text-base"><strong>Email:</strong> hello@moyumbiryani.co.tz</p>
-              <p className="text-base"><strong>Phone:</strong> +255 123 456 789</p>
-              <p className="text-base"><strong>Address:</strong> Kaloleni Area, Arusha, Tanzania</p>
+              <p className="text-base"><strong>Phone:</strong> {selectedBranch?.phone || '+255 123 456 789'}</p>
+              <p className="text-base"><strong>Address:</strong> {selectedBranch?.address || 'Dar es Salaam, Tanzania'}</p>
             </div>
           </div>
         </motion.div>

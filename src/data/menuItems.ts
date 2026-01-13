@@ -1,4 +1,10 @@
 import birianiPoster from '@/assets/biriani-poster.jpeg';
+import chocolateCake from '@/assets/chocolate-cake.jpg';
+import vanillaCake from '@/assets/vanilla-cake.jpg';
+import redVelvetCake from '@/assets/red-velvet-cake.jpg';
+import weddingCake from '@/assets/wedding-cake.jpg';
+import fruitCake from '@/assets/fruit-cake.jpg';
+import caramelCake from '@/assets/caramel-cake.jpg';
 
 export interface MenuItem {
   id: string;
@@ -128,9 +134,9 @@ export const menuItems: MenuItem[] = [
   {
     id: '11',
     name: 'Chocolate Layer Cake',
-    description: 'Rich chocolate layers with creamy ganache frosting',
+    description: 'Rich chocolate layers with creamy ganache frosting and chocolate shavings',
     price: 35000,
-    image: birianiPoster, // Will need cake image
+    image: chocolateCake,
     category: 'Cakes',
     productType: 'cakes',
     isAvailable: true,
@@ -139,9 +145,9 @@ export const menuItems: MenuItem[] = [
   {
     id: '12',
     name: 'Vanilla Birthday Cake',
-    description: 'Classic vanilla cake with buttercream, customizable decorations',
+    description: 'Classic vanilla cake with buttercream frosting and colorful sprinkles',
     price: 30000,
-    image: birianiPoster,
+    image: vanillaCake,
     category: 'Cakes',
     productType: 'cakes',
     isAvailable: true,
@@ -149,9 +155,9 @@ export const menuItems: MenuItem[] = [
   {
     id: '13',
     name: 'Red Velvet Cake',
-    description: 'Velvety soft cake with cream cheese frosting',
+    description: 'Velvety soft cake with luxurious cream cheese frosting',
     price: 40000,
-    image: birianiPoster,
+    image: redVelvetCake,
     category: 'Cakes',
     productType: 'cakes',
     isAvailable: true,
@@ -159,9 +165,50 @@ export const menuItems: MenuItem[] = [
   {
     id: '14',
     name: 'Custom Wedding Cake',
-    description: 'Multi-tier cake designed for your special day',
+    description: 'Elegant multi-tier cake designed for your special day with floral decorations',
     price: 150000,
-    image: birianiPoster,
+    image: weddingCake,
+    category: 'Cakes',
+    productType: 'cakes',
+    isAvailable: true,
+  },
+  {
+    id: '15',
+    name: 'Fresh Fruit Cake',
+    description: 'Light sponge cake topped with fresh berries and cream',
+    price: 38000,
+    image: fruitCake,
+    category: 'Cakes',
+    productType: 'cakes',
+    isAvailable: true,
+  },
+  {
+    id: '16',
+    name: 'Caramel Drip Cake',
+    description: 'Decadent caramel cake with dripping sauce and caramel candies',
+    price: 45000,
+    image: caramelCake,
+    category: 'Cakes',
+    productType: 'cakes',
+    isAvailable: true,
+    isSpecial: true,
+  },
+  {
+    id: '17',
+    name: 'Black Forest Cake',
+    description: 'Classic German cake with chocolate, cherries, and whipped cream',
+    price: 42000,
+    image: chocolateCake,
+    category: 'Cakes',
+    productType: 'cakes',
+    isAvailable: true,
+  },
+  {
+    id: '18',
+    name: 'Cupcake Box (12 pcs)',
+    description: 'Assorted flavors - vanilla, chocolate, and red velvet cupcakes',
+    price: 25000,
+    image: vanillaCake,
     category: 'Cakes',
     productType: 'cakes',
     isAvailable: true,
