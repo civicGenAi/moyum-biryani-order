@@ -1,34 +1,56 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, User, Phone, MapPin, Settings, LogIn, Heart, Bell, HelpCircle, ChevronRight, LogOut, Gift, Shield, CreditCard } from 'lucide-react';
+import { ArrowLeft, User, Phone, MapPin, Settings, LogIn, Heart, Bell, HelpCircle, ChevronRight, LogOut, Gift, Shield, CreditCard, Store, Check, Cake, Utensils } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { BottomNav } from '@/components/public/BottomNav';
 import { CartSheet } from '@/components/public/CartSheet';
 import { Switch } from '@/components/ui/switch';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useBranch } from '@/contexts/BranchContext';
+import { productCategories } from '@/data/branches';
 
 const Profile = () => {
   const navigate = useNavigate();
   const [cartOpen, setCartOpen] = useState(false);
+  const [locationSheetOpen, setLocationSheetOpen] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const { selectedBranch } = useBranch();
+  const { branches, selectedBranch, setSelectedBranch } = useBranch();
+  const activeBranches = branches.filter(b => b.isActive);
 
   const menuItems = [
-    { icon: Phone, label: 'Saved Phone Numbers', description: 'Manage your contact numbers', path: null },
-    { icon: MapPin, label: 'Saved Addresses', description: 'Delivery addresses', path: null },
-    { icon: Heart, label: 'Favorites', description: 'Your favorite items', path: null },
-    { icon: Gift, label: 'Rewards & Offers', description: 'View your rewards', path: null },
-    { icon: CreditCard, label: 'Payment Methods', description: 'Manage payment options', path: null },
+    { icon: Phone, label: 'Saved Phone Numbers', description: 'Manage your contact numbers', path: '/profile/phones' },
+    { icon: MapPin, label: 'Saved Addresses', description: 'Delivery addresses', path: '/profile/addresses' },
+    { icon: Heart, label: 'Favorites', description: 'Your favorite items', path: '/profile/favorites' },
+    { icon: Gift, label: 'Rewards & Offers', description: 'View your rewards', path: '/profile/rewards' },
+    { icon: CreditCard, label: 'Payment Methods', description: 'Manage payment options', path: '/profile/payments' },
   ];
 
   const settingsItems = [
     { icon: Bell, label: 'Push Notifications', hasSwitch: true },
     { icon: Shield, label: 'Privacy & Security', path: '/privacy-policy' },
     { icon: HelpCircle, label: 'Help & Support', path: '/contact' },
-    { icon: Settings, label: 'App Settings', path: null },
+    { icon: Settings, label: 'App Settings', path: '/profile/settings' },
   ];
+
+  const handleSelectBranch = (branch: typeof selectedBranch) => {
+    if (branch) {
+      setSelectedBranch(branch);
+      setLocationSheetOpen(false);
+    }
+  };
+
+  const getCategoryIcon = (categoryId: string) => {
+    switch (categoryId) {
+      case 'cakes':
+        return <Cake className="h-4 w-4" />;
+      case 'biryani':
+        return <Utensils className="h-4 w-4" />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -73,20 +95,88 @@ const Profile = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <Card className="p-4 border-dashed border-2 border-primary/30 bg-primary/5">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-                  <MapPin className="h-5 w-5 text-primary" />
+            <Sheet open={locationSheetOpen} onOpenChange={setLocationSheetOpen}>
+              <SheetTrigger asChild>
+                <Card className="p-4 border-dashed border-2 border-primary/30 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                      <MapPin className="h-5 w-5 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs text-muted-foreground">Current Location</p>
+                      <p className="font-semibold text-foreground">{selectedBranch.name}</p>
+                    </div>
+                    <Button variant="ghost" size="sm" className="text-primary text-xs">
+                      Change
+                    </Button>
+                  </div>
+                </Card>
+              </SheetTrigger>
+              <SheetContent side="bottom" className="h-auto max-h-[70vh] rounded-t-3xl">
+                <SheetHeader className="pb-4 border-b border-border">
+                  <SheetTitle className="flex items-center gap-2 text-lg">
+                    <MapPin className="h-5 w-5 text-primary" />
+                    Choose Your Location
+                  </SheetTitle>
+                </SheetHeader>
+                
+                <div className="py-4 space-y-3 overflow-y-auto max-h-[50vh]">
+                  {activeBranches.map((branch, index) => (
+                    <motion.button
+                      key={branch.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={() => handleSelectBranch(branch)}
+                      className={`w-full p-4 rounded-2xl border-2 transition-all text-left ${
+                        selectedBranch?.id === branch.id
+                          ? 'border-primary bg-primary/10'
+                          : 'border-border bg-card hover:border-primary/50'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`p-3 rounded-xl ${
+                          selectedBranch?.id === branch.id 
+                            ? 'bg-primary text-primary-foreground' 
+                            : 'bg-muted text-muted-foreground'
+                        }`}>
+                          <Store className="h-5 w-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <h3 className="font-semibold text-foreground">{branch.name}</h3>
+                            {selectedBranch?.id === branch.id && (
+                              <div className="bg-primary text-primary-foreground rounded-full p-1">
+                                <Check className="h-3 w-3" />
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-sm text-muted-foreground truncate">{branch.address}</p>
+                          <div className="flex items-center gap-2 mt-2">
+                            {branch.categories.map(catId => {
+                              const cat = productCategories.find(c => c.id === catId);
+                              return cat ? (
+                                <span
+                                  key={catId}
+                                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                                    catId === 'cakes' 
+                                      ? 'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300'
+                                      : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300'
+                                  }`}
+                                >
+                                  {getCategoryIcon(catId)}
+                                  {cat.name}
+                                </span>
+                              ) : null;
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.button>
+                  ))}
                 </div>
-                <div className="flex-1">
-                  <p className="text-xs text-muted-foreground">Current Location</p>
-                  <p className="font-semibold text-foreground">{selectedBranch.name}</p>
-                </div>
-                <Button variant="ghost" size="sm" className="text-primary text-xs">
-                  Change
-                </Button>
-              </div>
-            </Card>
+              </SheetContent>
+            </Sheet>
           </motion.div>
         )}
 
