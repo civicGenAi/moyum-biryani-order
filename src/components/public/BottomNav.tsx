@@ -12,7 +12,7 @@ export const BottomNav = ({ onCartClick }: BottomNavProps) => {
 
   const navItems = [
     { icon: Home, label: 'Home', path: '/' },
-    { icon: UtensilsCrossed, label: 'Menu', path: '/#menu' },
+    { icon: UtensilsCrossed, label: 'Menu', path: '/menu' },
     { icon: ShoppingCart, label: 'Cart', path: 'cart', isCart: true },
     { icon: ClipboardList, label: 'Orders', path: '/orders' },
     { icon: User, label: 'Profile', path: '/profile' },
