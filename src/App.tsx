@@ -17,6 +17,12 @@ import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
+import SavedPhones from "./pages/SavedPhones";
+import SavedAddresses from "./pages/SavedAddresses";
+import Favorites from "./pages/Favorites";
+import Rewards from "./pages/Rewards";
+import PaymentMethods from "./pages/PaymentMethods";
+import AppSettings from "./pages/AppSettings";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -50,6 +56,12 @@ const App = () => (
               <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmation />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/phones" element={<SavedPhones />} />
+              <Route path="/profile/addresses" element={<SavedAddresses />} />
+              <Route path="/profile/favorites" element={<Favorites />} />
+              <Route path="/profile/rewards" element={<Rewards />} />
+              <Route path="/profile/payments" element={<PaymentMethods />} />
+              <Route path="/profile/settings" element={<AppSettings />} />
 
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
