@@ -62,6 +62,7 @@
     --brand-cream: 40 30% 96%;
     --brand-green: 145 45% 28%;
     --brand-red: 0 75% 50%;
+    --brand-pink: 340 75% 55%;
 
     /* Sidebar */
     --sidebar-background: 20 35% 18%;
@@ -72,6 +73,24 @@
     --sidebar-accent-foreground: 40 30% 95%;
     --sidebar-border: 20 25% 25%;
     --sidebar-ring: 28 85% 55%;
+  }
+
+  /* Branch theme: Cakes (pink/rose) */
+  :root[data-branch-theme="cakes"] {
+    --primary: 340 75% 55%;
+    --ring: 340 75% 55%;
+    --brand-orange: 340 75% 55%;
+    --sidebar-primary: 340 75% 55%;
+    --sidebar-ring: 340 75% 55%;
+  }
+
+  /* Branch theme: Mixed (biryani + cakes) */
+  :root[data-branch-theme="mixed"] {
+    --primary: 25 90% 50%;
+    --ring: 25 90% 50%;
+    --brand-orange: 25 90% 50%;
+    --sidebar-primary: 25 90% 50%;
+    --sidebar-ring: 25 90% 50%;
   }
 
   .dark {

@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/contexts/CartContext';
+import { useBranch } from '@/contexts/BranchContext';
 import { BranchSelector } from './BranchSelector';
+import { MobileBranchSelector } from './MobileBranchSelector';
 import logo from '@/assets/logo.jpeg';
 import { Link } from 'react-router-dom';
 
@@ -15,9 +17,30 @@ interface HeaderProps {
 
 export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
   const { itemCount } = useCart();
+  const { selectedBranch } = useBranch();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
+
+  // Dynamic tagline based on branch categories
+  const getTagline = () => {
+    if (!selectedBranch) return 'Chicken Biryani';
+    const hasCakes = selectedBranch.categories.includes('cakes');
+    const hasBiryani = selectedBranch.categories.includes('biryani');
+    if (hasCakes && hasBiryani) return 'Biryani & Cakes';
+    if (hasCakes) return 'Premium Cakes';
+    return 'Chicken Biryani';
+  };
+
+  // Dynamic search placeholder
+  const getSearchPlaceholder = () => {
+    if (!selectedBranch) return 'Search menu...';
+    const hasCakes = selectedBranch.categories.includes('cakes');
+    const hasBiryani = selectedBranch.categories.includes('biryani');
+    if (hasCakes && hasBiryani) return 'Search biryani, cakes...';
+    if (hasCakes) return 'Search cakes...';
+    return 'Search for biryani...';
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +52,13 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
 
   return (
     <header className="sticky top-0 z-50">
+      {/* Mobile Location Bar */}
+      <div className="md:hidden bg-secondary text-secondary-foreground">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-center">
+          <MobileBranchSelector />
+        </div>
+      </div>
+
       {/* Main Header */}
       <motion.div
         className={`bg-card/95 backdrop-blur-xl border-b border-border transition-all duration-300 ${
@@ -45,18 +75,18 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
               <motion.img
                 src={logo}
                 alt="MOYUM"
-                className="h-12 w-12 rounded-xl object-cover shadow-md"
+                className="h-10 w-10 md:h-12 md:w-12 rounded-xl object-cover shadow-md"
                 whileHover={{ scale: 1.05, rotate: 5 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               />
               <div>
                 <motion.h1
-                  className="text-xl font-extrabold text-secondary group-hover:text-primary transition-colors"
+                  className="text-lg md:text-xl font-extrabold text-secondary group-hover:text-primary transition-colors"
                   whileHover={{ scale: 1.05 }}
                 >
                   MOYUM
                 </motion.h1>
-                <p className="text-xs text-muted-foreground">Chicken Biryani</p>
+                <p className="text-[10px] md:text-xs text-muted-foreground">{getTagline()}</p>
               </div>
             </Link>
 
@@ -66,7 +96,7 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   type="text"
-                  placeholder="Search for biryani..."
+                  placeholder={getSearchPlaceholder()}
                   className="pl-10 pr-4 bg-muted/50 border-muted-foreground/20 focus:border-primary"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -81,7 +111,7 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden"
+                className="md:hidden h-9 w-9"
                 onClick={() => setSearchOpen(!searchOpen)}
               >
                 <Search className="h-5 w-5" />
@@ -92,7 +122,7 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative"
+                  className="relative h-9 w-9 md:h-10 md:w-10"
                   onClick={onCartClick}
                 >
                   <ShoppingCart className="h-5 w-5" />
@@ -113,7 +143,7 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
 
               {/* Menu Toggle */}
               {onMenuToggle && (
-                <Button variant="ghost" size="icon" onClick={onMenuToggle} className="md:hidden">
+                <Button variant="ghost" size="icon" onClick={onMenuToggle} className="md:hidden h-9 w-9">
                   <Menu className="h-5 w-5" />
                 </Button>
               )}
@@ -133,7 +163,7 @@ export const Header = ({ onCartClick, onMenuToggle }: HeaderProps) => {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     type="text"
-                    placeholder="Search for biryani..."
+                    placeholder={getSearchPlaceholder()}
                     className="pl-10 pr-10 bg-muted/50"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
