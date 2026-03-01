@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { ShoppingCart, Clock, CheckCircle, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { ThemeSwitcher } from '@/components/admin/ThemeSwitcher';
 
 interface Order {
   total: number;
@@ -75,6 +76,9 @@ const AdminDashboard = () => {
 
   return (
     <div className="space-y-6">
+      {/* Theme Switcher — Store Appearance */}
+      <ThemeSwitcher />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <Card key={stat.title} className="p-6">
